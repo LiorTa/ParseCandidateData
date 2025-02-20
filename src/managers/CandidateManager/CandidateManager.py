@@ -9,8 +9,8 @@ def calculate_days_gap(start_date: str, end_date: str) -> int:
     Calculate the number of days between two dates.
     
     Args:
-        start_date (str): Start date in MM/DD/YYYY format
-        end_date (str): End date in MM/DD/YYYY format
+        start_date (str): Start date in format "Jan/01/1970"
+        end_date (str): End date in format "Jan/01/1970"
         
     Returns:
         int: Number of days between the two dates
@@ -20,7 +20,7 @@ def calculate_days_gap(start_date: str, end_date: str) -> int:
     return (start - end).days
 
 
-def process_experience(experience: List[Dict[str, Any]]) -> tuple[str, dict]:
+def process_experience(experience: List[Dict[str, Any]]) -> List[WorkExperience]:
 
 
     experience_list = []
@@ -38,6 +38,7 @@ def process_experience(experience: List[Dict[str, Any]]) -> tuple[str, dict]:
         work_experience = WorkExperience(exp.get("title", "Unknown Role"), company_name, exp.get("start_date", ""), exp.get("end_date", ""), location, current_job)
 
         if i > 0:
+            # Calculate gap between current job and previous job
             prev_job = sorted_exp[i-1]
             gap_days = calculate_days_gap(exp['start_date'],prev_job['end_date'])
             if gap_days and gap_days > 0:
@@ -49,6 +50,13 @@ def process_experience(experience: List[Dict[str, Any]]) -> tuple[str, dict]:
 
 
 def get_all_candidates(resumes: list[dict]) -> list[Candidate]:
+    """
+    Process all resumes and return a list of Candidate objects.
+    
+    Args:
+        resumes (list[dict]): List of dictionaries containing resume data
+        
+    """
     candidates = []
     for resume in resumes:
         experiences = process_experience(resume.get("experience", []))
