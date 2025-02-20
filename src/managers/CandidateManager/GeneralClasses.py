@@ -21,7 +21,7 @@ class WorkExperience:
 
     def __str__(self):
         """String representation of work experience"""
-        base_str = f"Worked as: {self.role}, From {self.start_date} To {self.end_date} in {self.location}, currently working: {self.current_job}"
+        base_str = f"Worked as: {self.role} in {self.company_name}, From {self.start_date} To {self.end_date} in {self.location}, currently working: {self.current_job}"
         if self.gap_after:
             return f"{base_str}\nGap in CV from previous job: {self.gap_after} days"
         return base_str

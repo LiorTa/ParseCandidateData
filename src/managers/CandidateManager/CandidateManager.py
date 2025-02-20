@@ -15,8 +15,12 @@ def calculate_days_gap(start_date: str, end_date: str) -> int:
     Returns:
         int: Number of days between the two dates
     """
+    if start_date == "" or end_date == "":
+        return 0
     start = datetime.strptime(start_date, '%b/%d/%Y')
     end = datetime.strptime(end_date, '%b/%d/%Y')
+    if end > start:
+        return 0
     return (start - end).days
 
 
